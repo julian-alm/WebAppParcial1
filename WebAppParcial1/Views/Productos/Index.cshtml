@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebAppParcial1.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registro de Productos</h1>
+@{
+    int cantidadFavoritos = 0;
+    int cantidadProductos = Model.Count();
+    if (cantidadProductos == 0)
+    {
+    <h3>No se han registrado productos aún</h3>
+    }
+    if(cantidadProductos == 1)
+    {
+    <h3>Se ha registrado 1 producto </h3>
+    }
+    if(cantidadProductos >= 2)
+    {
+    <h3>Se han registrado @cantidadProductos Productos</h3>
+    }
+    foreach (var item in Model)
+    {
+        if (item.Favorito == true)
+        {
+            cantidadFavoritos++;
+        }
+
+    }
+    <h3>Productos Favoritos registrados: @cantidadFavoritos</h3>
+
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Producto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marca)
+            </th>
+            <th>
+                Categoría
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.categoria.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
